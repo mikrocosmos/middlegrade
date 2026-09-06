@@ -56,7 +56,7 @@ export const HOMEWORK_STATUS = {
   UPLOADED: 2,
   ACTIVE: 3,
   DELETED: 5,
-  OVERDUE: 6,
+  OVERDUE: 0,
 } as const;
 
 export const HOMEWORK_STATUSES = [
