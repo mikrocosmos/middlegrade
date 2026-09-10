@@ -59,7 +59,7 @@ const NavList = ({ badges, collapsed }: NavListProps) => (
             <>
               <span className="relative shrink-0">
                 <Icon
-                  className={cn("size-4.5", isActive && "text-brand-300")}
+                  className={cn("size-4.5", isActive && "text-brand-accent")}
                   aria-hidden
                 />
                 {badge ? (

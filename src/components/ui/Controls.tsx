@@ -23,7 +23,7 @@ export const Button = ({
       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400",
       "disabled:cursor-not-allowed disabled:opacity-50",
       variant === "primary" &&
-        "bg-brand-600 text-white hover:bg-brand-500 active:bg-brand-700",
+        "bg-brand-fill text-white hover:bg-brand-fill-hover active:bg-brand-fill-active",
       variant === "outline" &&
         "border border-line text-ink-200 hover:border-line hover:text-heading",
       variant === "ghost" && "text-ink-300 hover:bg-overlay hover:text-heading",
@@ -138,7 +138,7 @@ export function Segmented<T extends string | number>({
             className={cn(
               "inline-flex flex-1 basis-[calc(50%-0.125rem)] items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors sm:basis-0",
               active
-                ? "bg-brand-600 text-white"
+                ? "bg-brand-fill text-white hover:bg-brand-fill-hover active:bg-brand-fill-active"
                 : "text-ink-400 hover:bg-overlay hover:text-ink-100",
             )}
           >

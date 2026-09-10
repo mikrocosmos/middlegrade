@@ -8,7 +8,7 @@ import { studentWork } from "@/utils/studentWork";
 import type { HomeworkItem } from "@/types";
 
 const ACTION_CLASS =
-  "inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200";
+  "inline-flex items-center gap-1.5 text-brand-accent hover:text-brand-accent-hover";
 
 const markTone = (mark: number) => {
   if (mark >= 4) return "good" as const;
@@ -26,7 +26,7 @@ export const HomeworkCard = ({ item }: { item: HomeworkItem }) => {
     <li className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-line">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs tracking-wide text-brand-300 uppercase">
+          <p className="text-xs tracking-wide text-brand-accent uppercase">
             {item.name_spec}
           </p>
           <h3 className="mt-1 text-sm font-medium text-ink-50">

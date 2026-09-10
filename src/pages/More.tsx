@@ -60,7 +60,7 @@ export const MorePage = () => {
               to={item.to}
               className="flex items-center gap-3 border-b border-line px-4 py-3.5 last:border-0"
             >
-              <Icon className="size-4.5 shrink-0 text-brand-300" aria-hidden />
+              <Icon className="size-4.5 shrink-0 text-brand-accent" aria-hidden />
               <span className="min-w-0 flex-1 text-sm font-medium text-heading">
                 {item.label}
               </span>
