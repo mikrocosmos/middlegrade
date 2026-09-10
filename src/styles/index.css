@@ -34,6 +34,12 @@
   --color-brand-800: #4f14b4;
   --color-brand-900: #421494;
 
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-hover: var(--brand-accent-hover);
+  --color-brand-fill: var(--brand-fill);
+  --color-brand-fill-hover: var(--brand-fill-hover);
+  --color-brand-fill-active: var(--brand-fill-active);
+
   --color-mark-classwork: #38bdf8;
   --color-mark-homework: #f472b6;
   --color-mark-lab: #a78bfa;
@@ -66,6 +72,11 @@
     --ink-800: #1a1e30;
     --ink-900: #10131f;
     --ink-950: #080a12;
+    --brand-accent: #bda9ff;
+    --brand-accent-hover: #d9cfff;
+    --brand-fill: #7024f7;
+    --brand-fill-hover: #7f45ff;
+    --brand-fill-active: #5f16dc;
   }
 
   html[data-theme="light"] {
@@ -93,6 +104,11 @@
     --color-mark-control: #059669;
     --color-mark-practical: #ea580c;
     --color-mark-final: #64748b;
+    --brand-accent: #7024f7;
+    --brand-accent-hover: #5f16dc;
+    --brand-fill: #5f16dc;
+    --brand-fill-hover: #7024f7;
+    --brand-fill-active: #4f14b4;
   }
 
   html {

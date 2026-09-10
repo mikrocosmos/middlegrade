@@ -34,7 +34,7 @@ export const TabBar = ({ badges }: TabBarProps) => {
                   return cn(
                     "flex h-16 min-w-0 flex-col items-center justify-end gap-1 px-1 pb-2",
                     active ? "text-heading" : "text-ink-400",
-                    item.featured && "text-brand-300",
+                    item.featured && "text-brand-accent",
                   );
                 }}
               >
