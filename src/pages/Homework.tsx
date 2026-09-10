@@ -5,6 +5,7 @@ import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { Segmented, Select } from "@/components/ui/Controls";
 import { EmptyState } from "@/components/ui/States";
 import {
+  ALL_SPECS,
   HOMEWORK_SECTIONS,
   HOMEWORK_TYPE,
   HOMEWORK_TYPES,
@@ -12,6 +13,7 @@ import {
 import { useHomeworkCounts } from "@/hooks/useHomeworkCounts";
 import { homeworkGroupsQuery } from "@/lib/queries";
 import { useAuthStore } from "@/store/auth";
+import { parseHomeworkSubjectKey } from "@/utils/parseHomeworkSubjectKey";
 
 const initialSectionStates = (): Record<number, HomeworkSectionState> =>
   Object.fromEntries(
@@ -27,6 +29,7 @@ export const HomeworkPage = () => {
 
   const [groupId, setGroupId] = useState<number | undefined>(user?.current_group_id);
   const [type, setType] = useState<number>(HOMEWORK_TYPE.HOMEWORK);
+  const [subjectKey, setSubjectKey] = useState(ALL_SPECS);
   const [sectionStates, setSectionStates] = useState(initialSectionStates);
 
   useEffect(() => {
@@ -36,10 +39,15 @@ export const HomeworkPage = () => {
   }, [groupId, user?.current_group_id]);
 
   useEffect(() => {
+    setSubjectKey(ALL_SPECS);
+  }, [groupId]);
+
+  useEffect(() => {
     setSectionStates(initialSectionStates());
-  }, [groupId, type]);
+  }, [groupId, type, subjectKey]);
 
   const counts = useHomeworkCounts(groupId);
+  const subject = parseHomeworkSubjectKey(subjectKey);
 
   const handleSectionStateChange = useCallback(
     (status: number, state: HomeworkSectionState) => {
@@ -53,6 +61,18 @@ export const HomeworkPage = () => {
 
   const groupOptions =
     groups.data?.map((group) => ({ value: group.id, label: group.name })) ?? [];
+  const specs =
+    groups.data?.find((group) => group.id === groupId)?.specs ?? [];
+  const subjectOptions = [
+    { value: ALL_SPECS, label: ALL_SPECS },
+    ...specs.map((spec) => ({
+      value: `${spec.subject_source}:${spec.subject_id}`,
+      label: spec.name,
+    })),
+  ];
+
+  if (subjectKey !== ALL_SPECS && !subjectOptions.some(({ value }) => value === subjectKey))
+    setSubjectKey(ALL_SPECS);
 
   const typeOptions = HOMEWORK_TYPES.map((option) => ({
     ...option,
@@ -73,6 +93,9 @@ export const HomeworkPage = () => {
     });
   }, [allSectionsSettled, sectionStates]);
 
+  const showGroupFilter = groupOptions.length > 1 && groupId !== undefined;
+  const showSubjectFilter = specs.length > 0;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3">
@@ -85,17 +108,30 @@ export const HomeworkPage = () => {
         />
       </div>
 
-      {groupOptions.length > 1 && groupId !== undefined ? (
+      {showGroupFilter || showSubjectFilter ? (
         <Card>
           <CardHeader title="Фильтры" />
           <CardBody>
-            <Select
-              options={groupOptions}
-              value={groupId}
-              onChange={setGroupId}
-              ariaLabel="Группа"
-              className="w-full min-w-0 sm:w-56"
-            />
+            <div className="flex w-full flex-wrap items-center gap-2">
+              {showGroupFilter ? (
+                <Select
+                  options={groupOptions}
+                  value={groupId}
+                  onChange={setGroupId}
+                  ariaLabel="Группа"
+                  className="w-full min-w-0 sm:w-56"
+                />
+              ) : null}
+              {showSubjectFilter ? (
+                <Select
+                  options={subjectOptions}
+                  value={subjectKey}
+                  onChange={setSubjectKey}
+                  ariaLabel="Фильтр по предмету"
+                  className="w-full min-w-0 sm:w-72"
+                />
+              ) : null}
+            </div>
           </CardBody>
         </Card>
       ) : null}
@@ -107,6 +143,8 @@ export const HomeworkPage = () => {
             groupId={groupId}
             type={type}
             section={section}
+            subjectSource={subject?.subjectSource}
+            subjectId={subject?.subjectId}
             onStateChange={handleSectionStateChange}
           />
         ))}
@@ -116,7 +154,7 @@ export const HomeworkPage = () => {
         <Card>
           <EmptyState
             title="Заданий нет"
-            description="Попробуйте другой тип задания или группу"
+            description="Попробуйте другой тип задания, группу или предмет"
           />
         </Card>
       ) : null}

@@ -1,15 +1,23 @@
 import { X } from "lucide-react";
 import { useEffect, useId, useRef } from "react";
 import type { ReactNode } from "react";
+import { cn } from "@/lib/cn";
 
 type ModalProps = {
   title: string;
   description?: string;
   onClose: () => void;
-  children: ReactNode;
+  children?: ReactNode;
+  footer?: ReactNode;
 };
 
-export const Modal = ({ title, description, onClose, children }: ModalProps) => {
+export const Modal = ({
+  title,
+  description,
+  onClose,
+  children,
+  footer,
+}: ModalProps) => {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const closeHandler = useRef(onClose);
@@ -47,9 +55,18 @@ export const Modal = ({ title, description, onClose, children }: ModalProps) => 
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/60"
+        className={cn(
+          "relative flex max-h-[85vh] w-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/60",
+          children ? "max-w-xl" : "max-w-md",
+        )}
       >
-        <header className="flex items-start justify-between gap-3 border-b border-line px-5 py-4">
+        <header
+          className={cn(
+            "flex justify-between gap-3 px-5 py-4",
+            description ? "items-start" : "items-center",
+            children ? "border-b border-line" : "pb-2",
+          )}
+        >
           <div className="min-w-0">
             <h2 id={titleId} className="text-base font-semibold text-heading">
               {title}
@@ -69,7 +86,20 @@ export const Modal = ({ title, description, onClose, children }: ModalProps) => 
           </button>
         </header>
 
-        <div className="scrollbar-slim overflow-y-auto p-5">{children}</div>
+        {children ? (
+          <div className="scrollbar-slim overflow-y-auto p-5">{children}</div>
+        ) : null}
+
+        {footer ? (
+          <div
+            className={cn(
+              "flex justify-end gap-2 px-5 pb-4",
+              children ? "border-t border-line pt-4" : "pt-2",
+            )}
+          >
+            {footer}
+          </div>
+        ) : null}
       </div>
     </div>
   );

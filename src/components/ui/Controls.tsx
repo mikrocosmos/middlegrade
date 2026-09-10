@@ -25,7 +25,7 @@ export const Button = ({
       variant === "primary" &&
         "bg-brand-fill text-white hover:bg-brand-fill-hover active:bg-brand-fill-active",
       variant === "outline" &&
-        "border border-line text-ink-200 hover:border-line hover:text-heading",
+        "border border-line text-ink-200 hover:border-line hover:bg-overlay hover:text-heading",
       variant === "ghost" && "text-ink-300 hover:bg-overlay hover:text-heading",
       className,
     )}

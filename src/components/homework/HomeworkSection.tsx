@@ -16,6 +16,8 @@ type HomeworkSectionProps = {
   groupId: number | undefined;
   type: number;
   section: HomeworkSectionConfig;
+  subjectSource?: number;
+  subjectId?: number;
   onStateChange: (status: number, state: HomeworkSectionState) => void;
 };
 
@@ -23,9 +25,13 @@ export const HomeworkSection = ({
   groupId,
   type,
   section,
+  subjectSource,
+  subjectId,
   onStateChange,
 }: HomeworkSectionProps) => {
-  const homework = useInfiniteQuery(homeworkFeedQuery(groupId, type, section.value));
+  const homework = useInfiniteQuery(
+    homeworkFeedQuery(groupId, type, section.value, subjectSource, subjectId),
+  );
   const {
     data,
     fetchNextPage,
