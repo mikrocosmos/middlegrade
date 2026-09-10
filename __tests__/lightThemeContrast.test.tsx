@@ -63,6 +63,23 @@ const homeworkItem: HomeworkItem = {
   homework_comment: null,
 };
 
+const renderHomeworkCard = () => {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+
+  return render(
+    <QueryClientProvider client={client}>
+      <ul>
+        <HomeworkCard
+          item={homeworkItem}
+          sectionStatus={3}
+        />
+      </ul>
+    </QueryClientProvider>,
+  );
+};
+
 const renderAppLayout = (path = "/") => {
   const client = new QueryClient({
     defaultOptions: {
@@ -154,7 +171,7 @@ describe("light theme contrast matrix", () => {
   it("LIGHT_TEXT: accent text uses semantic tokens, not brand-300", () => {
     setTheme("light");
 
-    render(<HomeworkCard item={homeworkItem} />);
+    renderHomeworkCard();
     expectAccentClasses(screen.getByText("Язык сценариев JavaScript"));
     expectAccentClasses(screen.getByRole("link", { name: "Задание" }));
 
@@ -193,7 +210,7 @@ describe("light theme contrast matrix", () => {
   it("DARK_TEXT: accent text still uses semantic tokens", () => {
     setTheme("dark");
 
-    render(<HomeworkCard item={homeworkItem} />);
+    renderHomeworkCard();
     expectAccentClasses(screen.getByText("Язык сценариев JavaScript"));
     expectAccentClasses(screen.getByRole("link", { name: "Задание" }));
 
@@ -232,7 +249,7 @@ describe("light theme contrast matrix", () => {
   it("LIGHT_HOVER: action links hover via accent-hover, not brand-200", () => {
     setTheme("light");
 
-    render(<HomeworkCard item={homeworkItem} />);
+    renderHomeworkCard();
 
     const action = screen.getByRole("link", { name: "Задание" });
 

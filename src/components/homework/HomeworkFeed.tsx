@@ -6,6 +6,7 @@ import type { HomeworkItem } from "@/types";
 
 type HomeworkFeedProps = {
   items: HomeworkItem[];
+  sectionStatus: number;
   hasMore: boolean;
   isLoadingMore: boolean;
   loadError: boolean;
@@ -15,6 +16,7 @@ type HomeworkFeedProps = {
 
 export const HomeworkFeed = ({
   items,
+  sectionStatus,
   hasMore,
   isLoadingMore,
   loadError,
@@ -36,7 +38,11 @@ export const HomeworkFeed = ({
         className="grid gap-4 md:grid-cols-2 xl:grid-cols-3"
       >
         {items.map((item) => (
-          <HomeworkCard key={item.id} item={item} />
+          <HomeworkCard
+            key={item.id}
+            item={item}
+            sectionStatus={sectionStatus}
+          />
         ))}
       </ul>
       {hasMore ? <div ref={ref} className="h-px w-full" aria-hidden /> : null}

@@ -16,6 +16,9 @@ type RequestOptions = {
   signal?: AbortSignal;
 };
 
+const isFormDataBody = (body: unknown): body is FormData =>
+  typeof FormData !== "undefined" && body instanceof FormData;
+
 const localizeMessage = (status: number, message: string): string => {
   if (
     message === "Not authenticated" ||
@@ -52,8 +55,15 @@ export async function request<T>(
       method,
       credentials: "include",
       signal,
-      headers: body ? { "Content-Type": "application/json" } : undefined,
-      body: body ? JSON.stringify(body) : undefined,
+      headers:
+        body && !isFormDataBody(body)
+          ? { "Content-Type": "application/json" }
+          : undefined,
+      body: body
+        ? isFormDataBody(body)
+          ? body
+          : JSON.stringify(body)
+        : undefined,
     });
   } catch {
     throw new ApiError(
