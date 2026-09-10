@@ -7,13 +7,13 @@ import { TabBar } from "./TabBar";
 import { ThemePicker } from "./ThemePicker";
 import { Avatar } from "@/components/ui/Avatar";
 import { Counter } from "@/components/ui/Controls";
-import { HOMEWORK_STATUS } from "@/constants/constants";
 import { useLogout } from "@/hooks/useLogout";
 import { useStoredState } from "@/hooks/useStoredState";
 import { cn } from "@/lib/cn";
 import { homeworkCountsQuery } from "@/lib/queries";
 import { useAuthStore } from "@/store/auth";
 import { studentBalances } from "@/utils/studentBalances";
+import { sumHomeworkBadgeCounts } from "@/utils/sumHomeworkBadgeCounts";
 import { FeedBackButton } from "../ui/FeedBackButton";
 
 const Brand = ({ collapsed }: { collapsed: boolean }) => (
@@ -84,14 +84,10 @@ export const AppLayout = () => {
   const { coins, gems } = studentBalances(user?.gaming_points);
   const [collapsed, setCollapsed] = useStoredState("mg-sidebar-collapsed", false);
 
-  const badges = useMemo(() => {
-    const list = Array.isArray(homeworkCounts.data) ? homeworkCounts.data : [];
-    const active =
-      list.find((entry) => entry.counter_type === HOMEWORK_STATUS.ACTIVE)
-        ?.counter ?? 0;
-
-    return { "/homework": active };
-  }, [homeworkCounts.data]);
+  const badges = useMemo(
+    () => ({ "/homework": sumHomeworkBadgeCounts(homeworkCounts.data) }),
+    [homeworkCounts.data],
+  );
 
   return (
     <div className="flex min-h-full">
