@@ -177,7 +177,7 @@ export const AppLayout = () => {
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-7xl min-w-0 flex-1 px-4 py-5 pb-[calc(5.25rem+env(safe-area-inset-bottom))] sm:px-6 sm:py-8 lg:pb-8">
+        <main className="mx-auto w-full max-w-7xl min-w-0 flex-1 px-4 py-5 pb-[calc(5.25rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-8 lg:pb-8">
           <Outlet />
         </main>
         <FeedBackButton />
