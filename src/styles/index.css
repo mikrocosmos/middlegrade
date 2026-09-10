@@ -50,6 +50,17 @@
   --color-good: #16a34a;
   --color-warn: #d97706;
   --color-bad: #dc2626;
+
+  --color-homework-overdue: var(--homework-overdue);
+  --color-homework-deleted: var(--homework-deleted);
+  --color-homework-active: var(--homework-active);
+  --color-homework-review: var(--homework-review);
+  --color-homework-checked: var(--homework-checked);
+  --color-homework-overdue-fill: var(--homework-overdue-fill);
+  --color-homework-deleted-fill: var(--homework-deleted-fill);
+  --color-homework-active-fill: var(--homework-active-fill);
+  --color-homework-review-fill: var(--homework-review-fill);
+  --color-homework-checked-fill: var(--homework-checked-fill);
 }
 
 @layer base {
@@ -77,6 +88,36 @@
     --brand-fill: #7024f7;
     --brand-fill-hover: #7f45ff;
     --brand-fill-active: #5f16dc;
+    --homework-overdue: #f87171;
+    --homework-deleted: #c5cad8;
+    --homework-active: #7dd3fc;
+    --homework-review: #fbbf24;
+    --homework-checked: #c4b5fd;
+    --homework-overdue-fill: color-mix(
+      in srgb,
+      var(--homework-overdue) 16%,
+      var(--surface)
+    );
+    --homework-deleted-fill: color-mix(
+      in srgb,
+      var(--homework-deleted) 14%,
+      var(--surface)
+    );
+    --homework-active-fill: color-mix(
+      in srgb,
+      var(--homework-active) 16%,
+      var(--surface)
+    );
+    --homework-review-fill: color-mix(
+      in srgb,
+      var(--homework-review) 16%,
+      var(--surface)
+    );
+    --homework-checked-fill: color-mix(
+      in srgb,
+      var(--homework-checked) 16%,
+      var(--surface)
+    );
   }
 
   html[data-theme="light"] {
@@ -109,6 +150,11 @@
     --brand-fill: #5f16dc;
     --brand-fill-hover: #7024f7;
     --brand-fill-active: #4f14b4;
+    --homework-overdue: #dc2626;
+    --homework-deleted: #5c6685;
+    --homework-active: #0284c7;
+    --homework-review: #b45309;
+    --homework-checked: #5f16dc;
   }
 
   html {

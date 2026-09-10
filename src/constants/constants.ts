@@ -59,12 +59,55 @@ export const HOMEWORK_STATUS = {
   OVERDUE: 0,
 } as const;
 
-export const HOMEWORK_STATUSES = [
-  { value: HOMEWORK_STATUS.ACTIVE, label: "Текущие" },
-  { value: HOMEWORK_STATUS.UPLOADED, label: "На проверке" },
-  { value: HOMEWORK_STATUS.OVERDUE, label: "Просроченные" },
-  { value: HOMEWORK_STATUS.CHECKED, label: "Проверенные" },
+export const HOMEWORK_SECTIONS = [
+  {
+    value: HOMEWORK_STATUS.OVERDUE,
+    label: "Просроченные",
+    headingClass: "text-homework-overdue",
+    cardClass: "border-homework-overdue/50",
+    actionClass: "text-homework-overdue hover:bg-homework-overdue",
+    canSubmit: true,
+    canDelete: false,
+  },
+  {
+    value: HOMEWORK_STATUS.DELETED,
+    label: "Удалённые",
+    headingClass: "text-homework-deleted",
+    cardClass: "border-homework-deleted/40",
+    actionClass: "text-homework-deleted hover:bg-homework-deleted",
+    canSubmit: false,
+    canDelete: false,
+  },
+  {
+    value: HOMEWORK_STATUS.ACTIVE,
+    label: "Текущие",
+    headingClass: "text-homework-active",
+    cardClass: "border-homework-active/50",
+    actionClass: "text-homework-active hover:bg-homework-active",
+    canSubmit: true,
+    canDelete: false,
+  },
+  {
+    value: HOMEWORK_STATUS.UPLOADED,
+    label: "На проверке",
+    headingClass: "text-homework-review",
+    cardClass: "border-homework-review/50",
+    actionClass: "text-homework-review hover:bg-homework-review",
+    canSubmit: false,
+    canDelete: true,
+  },
+  {
+    value: HOMEWORK_STATUS.CHECKED,
+    label: "Проверенные",
+    headingClass: "text-homework-checked",
+    cardClass: "border-homework-checked/50",
+    actionClass: "text-homework-checked hover:bg-homework-checked",
+    canSubmit: false,
+    canDelete: false,
+  },
 ] as const;
+
+export type HomeworkSectionConfig = (typeof HOMEWORK_SECTIONS)[number];
 
 export const HOMEWORK_TYPE = {
   HOMEWORK: 0,

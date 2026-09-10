@@ -10,6 +10,7 @@ import type {
   AttendanceStatistic,
   ChartPoint,
   HomeworkCount,
+  HomeworkGroup,
   HomeworkList,
   Leaderboard,
   MarketCatalog,
@@ -21,7 +22,6 @@ import type {
   StudentReview,
   EvaluateLessonQueueItem,
   StudentVisit,
-  UserGroup,
   UserInfo,
 } from "@/types";
 import { nextHomeworkPage } from "@/utils/nextHomeworkPage";
@@ -113,7 +113,7 @@ export const scheduleRangeQuery = (start: string, end: string) =>
 export const homeworkGroupsQuery = () =>
   queryOptions({
     queryKey: ["homework", "groups"],
-    queryFn: () => request<UserGroup[]>("/homework/groups"),
+    queryFn: () => request<HomeworkGroup[]>("/homework/groups"),
     staleTime: FIVE_MINUTES,
   });
 
@@ -138,12 +138,21 @@ export const homeworkFeedQuery = (
   groupId: number | undefined,
   type: number,
   status: number,
+  subjectSource?: number,
+  subjectId?: number,
 ) =>
   infiniteQueryOptions({
-    queryKey: ["homework", "feed", groupId, type, status],
+    queryKey: ["homework", "feed", groupId, type, status, subjectSource, subjectId],
     queryFn: ({ pageParam }) =>
       request<HomeworkList>("/homework", {
-        params: { groupId, type, status, page: pageParam },
+        params: {
+          groupId,
+          type,
+          status,
+          page: pageParam,
+          subjectSource,
+          subjectId,
+        },
       }),
     initialPageParam: 1,
     getNextPageParam: nextHomeworkPage,
