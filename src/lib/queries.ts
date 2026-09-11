@@ -28,6 +28,10 @@ import { nextHomeworkPage } from "@/utils/nextHomeworkPage";
 import { toFutureExams } from "@/utils/toFutureExams";
 
 const FIVE_MINUTES = 1000 * 60 * 5;
+const VOLATILE = {
+  staleTime: 0,
+  refetchOnWindowFocus: true,
+} as const;
 
 export const meQuery = () =>
   queryOptions({
@@ -41,14 +45,14 @@ export const marksQuery = () =>
   queryOptions({
     queryKey: ["marks"],
     queryFn: () => request<StudentVisit[]>("/progress/marks"),
-    staleTime: FIVE_MINUTES,
+    ...VOLATILE,
   });
 
 export const examsQuery = () =>
   queryOptions({
     queryKey: ["exams"],
     queryFn: () => request<StudentExam[]>("/progress/exams"),
-    staleTime: FIVE_MINUTES,
+    ...VOLATILE,
   });
 
 export const performanceQuery = () =>
@@ -114,7 +118,7 @@ export const homeworkGroupsQuery = () =>
   queryOptions({
     queryKey: ["homework", "groups"],
     queryFn: () => request<HomeworkGroup[]>("/homework/groups"),
-    staleTime: FIVE_MINUTES,
+    ...VOLATILE,
   });
 
 export const homeworkQuery = (
@@ -131,7 +135,7 @@ export const homeworkQuery = (
       }),
     enabled: Boolean(groupId),
     placeholderData: keepPreviousData,
-    staleTime: FIVE_MINUTES,
+    ...VOLATILE,
   });
 
 export const homeworkFeedQuery = (
@@ -157,14 +161,14 @@ export const homeworkFeedQuery = (
     initialPageParam: 1,
     getNextPageParam: nextHomeworkPage,
     enabled: Boolean(groupId),
-    staleTime: FIVE_MINUTES,
+    ...VOLATILE,
   });
 
 export const homeworkCountsQuery = () =>
   queryOptions({
     queryKey: ["homework", "counts"],
     queryFn: () => request<HomeworkCount[]>("/homework/counts"),
-    staleTime: FIVE_MINUTES,
+    ...VOLATILE,
     retry: false,
   });
 
