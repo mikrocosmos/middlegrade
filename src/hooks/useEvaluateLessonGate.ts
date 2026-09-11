@@ -43,6 +43,7 @@ const invalidateScores = async (
   await Promise.all([
     queryClient.invalidateQueries({ queryKey: ["me"] }),
     queryClient.invalidateQueries({ queryKey: ["dashboard", "activity"] }),
+    queryClient.invalidateQueries({ queryKey: ["marks"] }),
   ]);
 };
 
